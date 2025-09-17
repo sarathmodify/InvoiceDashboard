@@ -6,7 +6,6 @@ import { lusitana } from './ui/font';
 import Image from 'next/image';
 
 export default function Page() {
-  console.log(lusitana,'lusitana');
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className={Style.shape}>
