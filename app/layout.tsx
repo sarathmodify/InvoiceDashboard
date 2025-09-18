@@ -1,6 +1,6 @@
 import '@/app/ui/global.css';
 import { ReactNode } from 'react';
-import { inter } from './ui/font';
+import { inter } from '@/app/ui/fonts';
 
 export default function RootLayout({
   children,
