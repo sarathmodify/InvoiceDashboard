@@ -34,7 +34,7 @@ export type State = {
    message : string | null,
 }
 
-export async function createInvoice(prevState : State,formData: FormData) {
+export async function createInvoice(prevState : State,formData: FormData) : Promise<State> {
                           
  const validatedFields = FormSchema.safeParse({
     customerId: formData.get('customerId'),
@@ -59,7 +59,8 @@ export async function createInvoice(prevState : State,formData: FormData) {
   }catch(error){
    console.error("Error when creating invoice:",error)
    return {
-    message : 'Database eror: failed to create invoice'
+    errors: {},
+    message : 'Database eror: failed to create invoice', 
    }
   }
   revalidatePath('/dashboard/invoices');
