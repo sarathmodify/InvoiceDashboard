@@ -67,7 +67,7 @@ export async function createInvoice(prevState : State,formData: FormData) : Prom
   redirect('/dashboard/invoices');
 }
 
-export async function updateInvoice(prevState : State ,formData: FormData) {
+export async function updateInvoice(prevState : State ,formData: FormData) : Promise<State> {
     const validatedFields = FormSchema.safeParse({
        customerId: formData.get('customerId'),
        amount: formData.get('amount'),
@@ -93,6 +93,7 @@ export async function updateInvoice(prevState : State ,formData: FormData) {
      catch(error){
       console.error("Error when updating invoice:",error)
       return {
+        errors: {},
        message : 'Database eror: failed to update invoice'
       }
      }
