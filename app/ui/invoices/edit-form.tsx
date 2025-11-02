@@ -11,6 +11,8 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { UpdateInvoice } from './buttons';
 import { updateInvoice as UpdateInvoiceAction } from '@/app/lib/actions';
+import { State } from '@/app/lib/actions';
+import { useActionState } from 'react';
 
 export default function EditInvoiceForm({
   invoice,
@@ -19,8 +21,13 @@ export default function EditInvoiceForm({
   invoice: InvoiceForm;
   customers: CustomerField[];
 }) {
+  const initialState : State = {
+    errors : {},
+    message : null,
+  }
+  const [state,formAction] = useActionState(UpdateInvoiceAction,initialState);
   return (
-    <form action={(formData)=>UpdateInvoiceAction(invoice.id,formData)}>
+    <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -46,7 +53,7 @@ export default function EditInvoiceForm({
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
         </div>
-
+         <input type="hidden" name="invoiceId" value={invoice.id} />
         {/* Invoice Amount */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
@@ -65,6 +72,12 @@ export default function EditInvoiceForm({
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
+          </div>
+           <div id='customer-error'>
+            {state.errors?.amount && (
+              <p className="mt-2 text-sm text-red-500">{state.errors.amount[0]}</p>
+            )
+          }
           </div>
         </div>
 
